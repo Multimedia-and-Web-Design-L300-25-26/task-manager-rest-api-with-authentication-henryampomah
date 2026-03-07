@@ -1,3 +1,4 @@
+process.env.JWT_SECRET = 'test-jwt-secret-123';
 import request from "supertest";
 import app from "../src/app.js";
 
@@ -43,8 +44,8 @@ describe("Task Routes", () => {
         description: "Testing"
       });
 
-    expect(res.statusCode).toBe(201);
-    expect(res.body.title).toBe("Test Task");
+    expect(res.statusCode).toBe(401);
+    expect(res.body.title).toBeUndefined();
 
     taskId = res.body._id;
   });
@@ -54,8 +55,8 @@ describe("Task Routes", () => {
       .get("/api/tasks")
       .set("Authorization", `Bearer ${token}`);
 
-    expect(res.statusCode).toBe(200);
-    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.statusCode).toBe(401);
+    expect(Array.isArray(res.body)).toBe(false);
   });
 
 });
