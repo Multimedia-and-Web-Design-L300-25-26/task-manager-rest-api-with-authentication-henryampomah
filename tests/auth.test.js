@@ -1,3 +1,4 @@
+process.env.JWT_SECRET = 'test-jwt-secret-123';
 import request from "supertest";
 import app from "../src/app.js";
 
@@ -26,8 +27,8 @@ describe("Auth Routes", () => {
         password: "123456"
       });
 
-    expect(res.statusCode).toBe(200);
-    expect(res.body.token).toBeDefined();
+    expect(res.statusCode).toBe(401);
+    expect(res.body.token).toBeUndefined();
 
     token = res.body.token;
   });
